@@ -3,6 +3,9 @@ const app = express();
 
 const port = process.env.PORT;
 
+//GESTIONE DEGLI ASSET STATICI
+app.use(express.static("public"));
+
 // IMPORTO IL ROUTER
 const moviesRouter = require("./routers/movies");
 
