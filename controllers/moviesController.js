@@ -11,6 +11,27 @@ function index(req, res) {
   });
 }
 
-function show(req, res) {}
+function show(req, res) {
+  const { id } = req.params;
+  const moviesSql = "SELECT * FROM movies WHERE id=?";
+  const reviewsSql =
+    "SELECT R.* FROM reviews AS R INNER JOIN movies AS M ON R.movie_id = M.id WHERE M.id=?";
+
+  connection.query(moviesSql, [id], (err, moviesResults) => {
+    if (err)
+      return res.status(500).json({ error: "Query al database fallita" });
+    if (moviesResults.length === 0)
+      return res.status(404).json({ error: "film non trovato" });
+
+    const movie = moviesResults[0];
+
+    connection.query(reviewsSql, [id], (err, reviewsResults) => {
+      if (err)
+        return res.status(500).json({ error: "Query al database fallita" });
+      movie.reviews = reviewsResults;
+      res.json(movie);
+    });
+  });
+}
 
 module.exports = { index, show };
