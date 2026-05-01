@@ -8,9 +8,10 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "watch": "node --watch app.js"
+    "watch": "node --env-file=.env --watch app.js"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
   }
 }
