@@ -6,6 +6,16 @@ const port = process.env.PORT;
 //GESTIONE DEGLI ASSET STATICI
 app.use(express.static("public"));
 
+//ABILITO CORS
+const cors = require("cors");
+
+//ABILITO IL DOMINIO DEL FE
+app.use(
+  cors({
+    origin: process.env.FE_APP,
+  }),
+);
+
 // IMPORTO IL ROUTER
 const moviesRouter = require("./routers/movies");
 
@@ -15,7 +25,7 @@ const errorsHandler = require("./middlewares/errorsHandler");
 //IMPORT IL MIDDLEWARE PER LE ROTTE INSESISTENTI
 const notFound = require("./middlewares/notFound");
 
-app.use("/movies", moviesRouter);
+app.use("/api/movies/", moviesRouter);
 
 app.use(errorsHandler);
 
