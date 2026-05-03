@@ -6,6 +6,10 @@ const port = process.env.PORT;
 //GESTIONE DEGLI ASSET STATICI
 app.use(express.static("public"));
 
+//MIDDLEWARE PER GENERAZIONE PERCORSO COMPLETO IMMAGINI
+const imagePath = require("./middlewares/setImagePath");
+app.use(imagePath);
+
 //ABILITO CORS
 const cors = require("cors");
 

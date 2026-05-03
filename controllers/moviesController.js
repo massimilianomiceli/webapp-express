@@ -7,7 +7,14 @@ function index(req, res) {
   connection.query(sql, (err, results) => {
     if (err)
       return res.status(500).json({ error: "Query al database fallita" });
-    res.json(results);
+
+    const movies = results.map((movie) => {
+      return {
+        ...movie,
+        image: req.imagePath + movie.image,
+      };
+    });
+    res.json(movies);
   });
 }
 
@@ -24,6 +31,7 @@ function show(req, res) {
       return res.status(404).json({ error: "film non trovato" });
 
     const movie = moviesResults[0];
+    movie.image = req.imagePath + movie.image;
 
     connection.query(reviewsSql, [id], (err, reviewsResults) => {
       if (err)
