@@ -3,6 +3,9 @@ const app = express();
 
 const port = process.env.PORT;
 
+//LETTURA DEL BODY IN FORMATO .json
+app.use(express.json());
+
 //GESTIONE DEGLI ASSET STATICI
 app.use(express.static("public"));
 
