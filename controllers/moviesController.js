@@ -42,4 +42,21 @@ function show(req, res) {
   });
 }
 
-module.exports = { index, show };
+function storeReview(req, res) {
+  const { id } = req.params;
+  const { name, text, vote } = req.body;
+  const sql =
+    "INSERT INTO reviews (name, text, vote, movie_id) VALUES (?, ?, ?, ?)";
+
+  connection.query(sql, [name, text, vote, id], (err, result) => {
+    if (err)
+      return res.status(500).json({ error: "Query al database fallita" });
+    res.status(201);
+    res.json({
+      message: "Recensione aggiunta con successo",
+      id: result.insertId,
+    });
+  });
+}
+
+module.exports = { index, show, storeReview };
