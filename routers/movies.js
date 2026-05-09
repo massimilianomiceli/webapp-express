@@ -15,7 +15,7 @@ moviesRouter.get("/", moviesController.index);
 moviesRouter.get("/:id", moviesController.show);
 
 //ROTTA STORE (MOVIE)
-moviesRouter.post("/", upload.single("image"), moviesController.show);
+moviesRouter.post("/", upload.single("image"), moviesController.store);
 
 //ROTTA STORE (RECENSIONI)
 moviesRouter.post("/:id/reviews", moviesController.storeReview);

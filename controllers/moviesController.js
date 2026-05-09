@@ -42,6 +42,28 @@ function show(req, res) {
   });
 }
 
+function store(req, res) {
+  const { title, director, genre, release_year, abstract } = req.body;
+  const imageName = `${req.file.filename}`;
+  const sql =
+    "INSERT INTO movies (title, director, genre, release_year, abstract, image) VALUES (?, ?, ?, ?, ?, ?)";
+
+  connection.query(
+    sql,
+    [title, director, genre, release_year, abstract, imageName],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return next(new Error("Errore interno del server"));
+      }
+      res.status(201).json({
+        status: "success",
+        message: "Film caricato con successo",
+      });
+    },
+  );
+}
+
 function storeReview(req, res) {
   const { id } = req.params;
   const { name, text, vote } = req.body;
@@ -59,4 +81,4 @@ function storeReview(req, res) {
   });
 }
 
-module.exports = { index, show, storeReview };
+module.exports = { index, show, store, storeReview };
